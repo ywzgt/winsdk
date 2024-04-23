@@ -1,0 +1,30 @@
+name: build
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: windows-latest
+    permissions:
+      contents: write
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+    - uses: msys2/setup-msys2@v2
+      with:
+        update: true
+        install: git p7zip unzip
+    - name: Package Visual Studio
+      run: ./package.sh
+    - name: Release
+      if: env.version
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: ${{ env.version }}
+        files: VisualStudio-${{ env.version }}-*.7z*
+        fail_on_unmatched_files: true
+    - name: Setup tmate ssh session
+      if: failure()
+      uses: mxschmitt/action-tmate@v3
