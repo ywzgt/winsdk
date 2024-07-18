@@ -25,8 +25,12 @@ jobs:
       uses: softprops/action-gh-release@v2
       with:
         tag_name: ${{ env.version }}
-        files: VisualStudio-${{ env.version }}-*.7z*
         fail_on_unmatched_files: true
+        files: |
+          MSVS_HASH
+          VisualStudio-${{ env.version }}-*.7z*
+          VisualStudio-${{ env.version }}-*.zip*
+          ${{ env.origin_file }}
     - name: Setup tmate ssh session
       if: failure()
       uses: mxschmitt/action-tmate@v3

@@ -33,7 +33,12 @@ wget "https://chrome-infra-packages.appspot.com/dl/infra/3pp/tools/cpython3/wind
 version=$(cat vs_version|sed 's/\s//g')
 echo "version=${version}" >> $GITHUB_ENV
 
-for i in *.zip; do mv "$i" "VisualStudio-${version}-$i"; done
+for i in *.zip; do
+	mv "$i" "VisualStudio-${version}-$i"
+	ln -s "VisualStudio-${version}-$i" "$i"
+done
+echo "origin_file=$i" >> $GITHUB_ENV
+echo "${i%.zip} ${version}" > MSVS_HASH
 unzip -qd vs VisualStudio-${version}-*.zip
 (cd vs; 7z a ../VisualStudio-${version}-${i%.zip}.7z .)
 sha256sum "VisualStudio-${version}-$i" > VisualStudio-${version}-$i.sha256
