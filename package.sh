@@ -10,7 +10,7 @@ channel=Enterprise  # Community Professional
 cd "C:/Program Files/Microsoft Visual Studio/2022/$channel/VC/Tools/MSVC"
 latest=$(ls | sort -V | tail -1)
 for i in $(ls); do
-	[[ $i != $latest ]] || { rm -rf $i/{,atlmfc/}lib/spectre; continue; }
+	[[ $i != $latest ]] || continue
 	mv "$i" orig."$i"; rm -r orig.$i &
 done
 
