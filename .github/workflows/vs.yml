@@ -2,7 +2,7 @@ name: build
 on:
   workflow_dispatch:
   schedule:
-    - cron: '5 6 */20 * *'
+    - cron: '5 6 */60 * *'
 jobs:
   build:
     runs-on: windows-latest
@@ -18,6 +18,18 @@ jobs:
       with:
         update: true
         install: git p7zip unzip
+    - name: Download winget
+      run: wget -nv https://github.com/microsoft/winget-cli/releases/latest/download/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle
+    - name: Install AppxPackages
+      shell: powershell
+      run: |
+        nuget install Microsoft.UI.Xaml
+        Add-AppxPackage Microsoft.UI.Xaml.*\tools\appx\x86\Release\Microsoft.UI.Xaml.*.appx
+        Add-AppxPackage Microsoft.UI.Xaml.*\tools\appx\x64\Release\Microsoft.UI.Xaml.*.appx
+        Add-AppxPackage "C:\Program Files (x86)\Microsoft SDKs\Windows Kits\10\ExtensionSDKs\Microsoft.VCLibs.Desktop\14.0\Appx\Retail\x64\Microsoft.VCLibs.x64.14.00.Desktop.appx"
+        Add-AppxProvisionedPackage -Online -PackagePath Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle -LicensePath License1.xml
+    - name: Reinstall Visual Studio and WindowsSDK
+      run: ./reinstall.sh
     - name: Package Visual Studio
       run: ./package.sh
     - name: Release
@@ -25,11 +37,11 @@ jobs:
       uses: softprops/action-gh-release@v2
       with:
         tag_name: ${{ env.version }}
-        fail_on_unmatched_files: true
+        fail_on_unmatched_files: false
         files: |
           MSVS_HASH
-          VisualStudio-${{ env.version }}-*.7z*
-          VisualStudio-${{ env.version }}-*.zip*
+          VisualStudio-*.7z*
+          VisualStudio-*.zip*
           ${{ env.origin_file }}
     - name: Setup tmate ssh session
       if: failure()
