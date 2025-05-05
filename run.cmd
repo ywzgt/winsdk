@@ -12,4 +12,4 @@ set path=%~dp0\bin;%path%
 rd /s/q "%ProgramFiles(x86)%\Windows Kits\10\Tools"
 rd /s/q "%ProgramFiles(x86)%\Windows Kits\10\Include\%winver%\km"
 rd /s/q "%ProgramFiles(x86)%\Windows Kits\10\Lib\%winver%\km"
-python3 package_from_installed.py --noarm -w %winver% 2022
+python3 package_from_installed.py -w %winver% 2022

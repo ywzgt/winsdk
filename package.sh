@@ -43,3 +43,11 @@ unzip -qd vs VisualStudio-${version}-*.zip
 (cd vs; 7z a ../VisualStudio-${version}-${i%.zip}.7z .)
 sha256sum "VisualStudio-${version}-$i" > VisualStudio-${version}-$i.sha256
 sha256sum "VisualStudio-${version}-${i%.zip}.7z" > VisualStudio-${version}-${i%.zip}.7z.sha256
+
+fsize="$(du -s VisualStudio-${version}-$i|awk '{print$1}')"
+if [[ $fsize -ge 2147483648 ]]; then
+	rm -f "VisualStudio-${version}-$i".sha256 $i
+	xz -T0 "VisualStudio-${version}-$i"
+	echo "origin_file=" >> $GITHUB_ENV
+	sha256sum "VisualStudio-${version}-$i".xz > VisualStudio-${version}-$i.xz.sha256
+fi
