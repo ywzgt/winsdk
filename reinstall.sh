@@ -8,6 +8,6 @@ do
 	[[ $sdk ]] || continue
 	echo winget uninstall $sdk
 done
-rm -rf "C:\Program Files (x86)\Windows Kits\10\References"
+# rm -rf "C:\Program Files (x86)\Windows Kits\10\References"
 
 yes | winget install --id Microsoft.VisualStudio.2022.Enterprise --verbose --override "--passive --config $PWD/vsconfig.json"
