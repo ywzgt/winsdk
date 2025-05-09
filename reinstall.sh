@@ -6,7 +6,7 @@ PATH="/c/Users/$(id -un)/AppData/Local/Microsoft/WindowsApps:$PATH"
 for sdk in `yes | winget list | grep -i WindowsSDK | cut -d' ' -f7`
 do
 	[[ $sdk ]] || continue
-	winget uninstall $sdk
+	echo winget uninstall $sdk
 done
 rm -rf "C:\Program Files (x86)\Windows Kits\10\References"
 
