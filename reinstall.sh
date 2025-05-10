@@ -6,8 +6,8 @@ PATH="/c/Users/$(id -un)/AppData/Local/Microsoft/WindowsApps:$PATH"
 for sdk in `yes | winget list | grep -i WindowsSDK | cut -d' ' -f7`
 do
 	[[ $sdk ]] || continue
-	echo winget uninstall $sdk
+	winget uninstall $sdk
 done
-# rm -rf "C:\Program Files (x86)\Windows Kits\10\References"
+rm -rf "C:\Program Files (x86)\Windows Kits\10"
 
-yes | winget install --id Microsoft.VisualStudio.2022.Enterprise --verbose --override "--passive --config $PWD/vsconfig.json"
+yes | winget install --id Microsoft.VisualStudio.2022.Community --verbose --override "--passive --config $PWD/vsconfig.json"
