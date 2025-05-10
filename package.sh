@@ -5,7 +5,7 @@ git clone --depth=1 https://chromium.googlesource.com/chromium/tools/depot_tools
 cp depot_tools/win_toolchain/* .
 
 workdir=$PWD
-channel=Enterprise  # Community Professional
+channel=Community #Enterprise  # Community Professional
 
 cd "C:/Program Files/Microsoft Visual Studio/2022/$channel/VC/Tools/MSVC"
 latest=$(ls | sort -V | tail -1)
