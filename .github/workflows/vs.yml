@@ -24,6 +24,7 @@ jobs:
       shell: powershell
       run: |
         nuget install Microsoft.UI.Xaml
+        "C:\Program Files (x86)\Microsoft Visual Studio\Installer\InstallCleanup.exe"
         Add-AppxPackage Microsoft.UI.Xaml.*\tools\appx\x86\Release\Microsoft.UI.Xaml.*.appx
         Add-AppxPackage Microsoft.UI.Xaml.*\tools\appx\x64\Release\Microsoft.UI.Xaml.*.appx
         Add-AppxPackage "C:\Program Files (x86)\Microsoft SDKs\Windows Kits\10\ExtensionSDKs\Microsoft.VCLibs.Desktop\14.0\Appx\Retail\x64\Microsoft.VCLibs.x64.14.00.Desktop.appx"
