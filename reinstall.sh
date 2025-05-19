@@ -20,7 +20,7 @@ printf ":: Update VisualStudio installer..."
 ./vs_enterprise.exe --quiet --wait --installerOnly >/dev/null
 printf "done.\n"
 printf ":: Install VisualStudio from config-file: vsconfig.json..."
-./vs_enterprise.exe --quiet --wait --config vsconfig.json >vs.log
+./vs_enterprise.exe --quiet --wait --config vsconfig.json >vs.log || ./vs_enterprise.exe --quiet --wait --config vsconfig.json >>vs.log
 printf "done.\n"
 
 # https://developer.microsoft.com/windows/downloads/windows-sdk

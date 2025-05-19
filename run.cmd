@@ -1,7 +1,7 @@
 @echo off
 cd /d %~dp0
 
-for /f "delims=" %%i in ('dir /b "%ProgramFiles(x86)%\Windows Kits\10\Redist"') do set winver=%%i
+for /f "delims=" %%i in ('dir /b "%ProgramFiles(x86)%\Windows Kits\10\Source"') do set winver=%%i
 for /f "usebackq tokens=*" %%i in (`"%programfiles(x86)%\microsoft visual studio\installer\vswhere.exe" -version [17.0^,18.0^) -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property catalog_productDisplayVersion`) do set vs_ver=%%i
 
 echo %vs_ver% > vs_version

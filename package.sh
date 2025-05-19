@@ -51,3 +51,12 @@ if [[ $fsize -ge 2147483 ]]; then
 	rm -f "VisualStudio-${version}-$i"*
 	echo "origin_file=" >> $GITHUB_ENV
 fi
+
+mkdir vs-noarm
+cd vs-noarm
+echo "::pack VisualStudio NO arm..."
+../bin/python3 ../package_from_installed.py --noarm -w $win_ver 2022
+unzip -qd ../vs-x86 *.zip
+(cd ../vs-x86; 7z a ../VisualStudio-${version}-${win_ver}-noarm.7z .)
+cd ..
+sha256sum "VisualStudio-${version}-${win_ver}-noarm.7z" > VisualStudio-${version}-${win_ver}-noarm.7z.sha256
