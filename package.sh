@@ -30,7 +30,7 @@ wget "https://chrome-infra-packages.appspot.com/dl/infra/3pp/tools/cpython3/wind
 7z x python3-windows-x64_zip
 
 ./run.cmd
-version=$(cat vs_version|sed 's/\s//g')
+version=$(cat vs_version|sed 's/\s\|(.*)//g')
 win_ver=$(cat win_version|sed 's/\s//g')
 echo "version=${version}-${win_ver}" >> $GITHUB_ENV
 
