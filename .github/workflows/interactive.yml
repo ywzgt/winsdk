@@ -1,0 +1,17 @@
+name: manually with Tmate
+on:
+  workflow_dispatch:
+jobs:
+  run:
+    runs-on: windows-latest
+    permissions:
+      contents: write
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v6
+    - name: Gh login
+      run: echo ${{ secrets.GITHUB_TOKEN }} | gh auth login --with-token; gh auth setup-git; gh auth status
+    - name: Setup tmate ssh session
+      uses: mxschmitt/action-tmate@v3
+      with:
+        limit-access-to-actor: true
