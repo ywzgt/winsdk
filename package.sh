@@ -35,20 +35,20 @@ win_ver=$(cat win_version|sed 's/\s//g')
 echo "version=${version}-${win_ver}" >> $GITHUB_ENV
 
 for i in *.zip; do
-	mv "$i" "VisualStudio-${version}-$i"
-	ln -s "VisualStudio-${version}-$i" "$i"
+	mv "$i" "VisualStudio-${version}-${win_ver}.zip"
+	ln -s "VisualStudio-${version}-${win_ver}.zip" "$i"
 done
 echo "origin_file=$i" >> $GITHUB_ENV
 echo "${i%.zip} ${version} ${win_ver}" > MSVS_HASH
 
 unzip -qd vs VisualStudio-${version}-*.zip
-(cd vs; 7z a ../VisualStudio-${version}-${i%.zip}.7z .)
-sha256sum "VisualStudio-${version}-$i" > VisualStudio-${version}-$i.sha256
-sha256sum "VisualStudio-${version}-${i%.zip}.7z" > VisualStudio-${version}-${i%.zip}.7z.sha256
+(cd vs; 7z a ../VisualStudio-${version}-${win_ver}.7z .)
+sha256sum "VisualStudio-${version}-${win_ver}.zip" > VisualStudio-${version}-${win_ver}.zip.sha256
+sha256sum "VisualStudio-${version}-${win_ver}.7z" > VisualStudio-${version}-${win_ver}.7z.sha256
 
-fsize="$(du -s VisualStudio-${version}-$i|awk '{print$1}')"
+fsize="$(du -s VisualStudio-${version}-${win_ver}.zip|awk '{print$1}')"
 if [[ $fsize -ge 2147483 ]]; then
-	rm -f "VisualStudio-${version}-$i"*
+	rm -f "VisualStudio-${version}-${win_ver}.zip"*
 	echo "origin_file=" >> $GITHUB_ENV
 fi
 
